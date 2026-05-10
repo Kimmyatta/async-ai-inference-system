@@ -46,7 +46,7 @@ async-ai-inference-system/
 ## AWS Resources
 
 1. S3 Bucket
-async-ai-inference-bucket
+YOUR_BUCKET_NAME
 
 2. S3 stores:
 models/model.pkl
@@ -58,7 +58,7 @@ async-ai-inference-queue
 Example SQS message:
 
 {
-  "record_id": "sample_001",
+  "record_id": "sample_1",
   "features": [...]
 }
 
@@ -124,27 +124,27 @@ predictions/sample_001.json
 1. Build the Docker image:
 docker build -t inference-consumer:latest .
 
+
 2. Test the container locally:
 docker run \
   -v ~/.aws:/root/.aws \
   -e PYTHONUNBUFFERED=1 \
   -e AWS_DEFAULT_REGION=us-east-1 \
-  -e S3_BUCKET=async-ai-inference-bucket \
-  -e SQS_QUEUE_URL="https://sqs.us-east-1.amazonaws.com/330117118623/async-ai-inference-queue" \
+  -e S3_BUCKET=YOUR_S3_BUCKET_NAME \
+  -e SQS_QUEUE_URL="YOUR_SQS_QUEUE_URL" \
   inference-consumer:latest
   
 3. Tag the image:
-docker tag inference-consumer:latest kimmypeters/inference-consumer:latest
+docker tag inference-consumer:latest username/inference-consumer:latest
 
 4. Push the image to Docker Hub:
-docker push kimmypeters/inference-consumer:latest
+docker push username/inference-consumer:latest
 
 ## Kubernetes Instructions
 *** The consumer-deployment.yaml file is the Kubernetes Deployment yaml***
 
 1. Create a Kubernetes secret for AWS credentials:
-kubectl create secret generic aws-credentials \
-  --from-file=credentials=$HOME/.aws/credentials
+
 
 2. Deploy the consumer:
 kubectl apply -f k8s/consumer-deployment.yaml
