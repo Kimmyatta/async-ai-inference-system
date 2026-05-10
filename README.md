@@ -57,10 +57,12 @@ predictions/sample_x.json
 async-ai-inference-queue
 Example SQS message:
 
+```text
 {
   "record_id": "sample_1",
   "features": [...]
 }
+``` 
 
 ## Airflow Instructions
 
