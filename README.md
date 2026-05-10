@@ -29,7 +29,7 @@ The system trains a machine learning model using the breast cancer dataset, stor
 
 ## Project Structure
 
-
+```text
 async-ai-inference-system/
 ├── dags/
 │   ├── training_dag.py
@@ -41,6 +41,7 @@ async-ai-inference-system/
 │   └── consumer-deployment.yaml
 ├── Dockerfile
 └── README.md
+``` 
 
 ## AWS Resources
 
