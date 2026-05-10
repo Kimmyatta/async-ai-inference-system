@@ -96,11 +96,13 @@ saves the model using joblib
 uploads models/model.pkl to S3
 uploads data/test_data.csv to S3
 
-Expected S3 outputs: Image attached as Model-pkl.png
+Expected S3 outputs:    Image attached as Model-pkl.png
+
 models/model.pkl
 data/test_data.csv
 
 2. Queue Population DAG   Image attached as SQS-messages and SQS.png
+
 The queue_population_dag.py file:
 reads data/test_data.csv from S3
 creates one message per test record
@@ -111,11 +113,11 @@ The consumer application is in:
 consumer/app.py
 
 ## The consumer:
-polls SQS for messages
-downloads models/model.pkl from S3 on startup
-performs inference
-writes each prediction to S3
-deletes SQS messages only after successful processing
+1.polls SQS for messages
+2.downloads models/model.pkl from S3 on startup
+3.performs inference
+4.writes each prediction to S3
+5.deletes SQS messages only after successful processing
 
 Each prediction is saved as a unique file: Image attached as s3-prediction.png
 predictions/sample_001.json
@@ -164,6 +166,7 @@ kubectl logs -f POD_NAME
 kubectl scale deployment inference-consumer --replicas=1
 
 2. Scale the consumer to 3 replicas: Image attached as kubernetes-scaled.png
+
 kubectl scale deployment inference-consumer --replicas=3
 
 3. Check that 3 pods are running:
@@ -178,7 +181,8 @@ This demonstrates that the asynchronous inference system can scale horizontally.
 
 ## Expected Final Output
 After running the full pipeline:
-training_dag uploads the trained model and test data to S3.
-queue_population_dag sends test records to SQS.
-Kubernetes consumers process the SQS messages.
-Prediction files are written to S3.
+
+1.training_dag uploads the trained model and test data to S3.
+2.queue_population_dag sends test records to SQS.
+3.Kubernetes consumers process the SQS messages.
+4.Prediction files are written to S3.
